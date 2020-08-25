@@ -28,12 +28,12 @@ jobs:
          cd /tmp
          wget https://downloads.mariadb.com/Connectors/c/connector-c-3.1.9/mariadb-connector-c-3.1.9-ubuntu-bionic-amd64.tar.gz -O mariadbcconnector.tar.gz
          tar xzf mariadbcconnector.tar.gz
-         cp -r /tmp/$(ls | grep "mariadb-")/lib/mariadb /usr/lib/
-         cp -r /tmp/$(ls | grep "mariadb-")/include/mariadb /usr/include/
+         sudo cp -r /tmp/$(ls | grep "mariadb-")/lib/mariadb /usr/lib/
+         sudo cp -r /tmp/$(ls | grep "mariadb-")/include/mariadb /usr/include/
 
     - name: Install CMake
       run: |
-       cd /tmp
+        cd /tmp
         wget https://github.com/Kitware/CMake/releases/download/v3.18.0/cmake-3.18.0-Linux-x86_64.tar.gz -O cmake.tar.gz
         tar xzf cmake.tar.gz
 
@@ -43,4 +43,3 @@ jobs:
         mkdir build
         cd build
         /tmp/$(ls /tmp | grep "cmake-")/bin/cmake -DGENERATE_DOCUMENTATION=OFF .. && /tmp/$(ls /tmp | grep "cmake-")/bin/cmake --build . --target authenticator
-        cp ./authenticator /etc/openvpn
