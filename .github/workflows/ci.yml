@@ -39,7 +39,7 @@ jobs:
 
     - name: Build and test
       run: |
-        cd {{ GITHUB_WORKSPACE }}
+        cd "$GITHUB_WORKSPACE"
         mkdir build
         cd build
         /tmp/$(ls /tmp | grep "cmake-")/bin/cmake -DGENERATE_DOCUMENTATION=OFF .. && /tmp/$(ls /tmp | grep "cmake-")/bin/cmake --build . --target authenticator
