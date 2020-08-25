@@ -16,15 +16,16 @@ jobs:
 
     - name: Create Build Environment
       run: |
-        apt-get update -y
-        apt-get install software-properties-common -y
-        add-apt-repository ppa:ubuntu-toolchain-r/test -y
-        apt-get update -y
-        apt-get upgrade -y
-        apt-get install git wget openssl build-essential gcc-10 g++-10 -y 
+        sudo apt-get update -y
+        sudo apt-get install software-properties-common -y
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt-get update -y
+        sudo apt-get upgrade -y
+        sudo apt-get install git wget openssl build-essential gcc-10 g++-10 -y 
 
     - name: Setup MariaDB
       run: |
+         cd /tmp
          wget https://downloads.mariadb.com/Connectors/c/connector-c-3.1.9/mariadb-connector-c-3.1.9-ubuntu-bionic-amd64.tar.gz -O mariadbcconnector.tar.gz
          tar xzf mariadbcconnector.tar.gz
          cp -r /tmp/$(ls | grep "mariadb-")/lib/mariadb /usr/lib/
@@ -32,11 +33,13 @@ jobs:
 
     - name: Install CMake
       run: |
+       cd /tmp
         wget https://github.com/Kitware/CMake/releases/download/v3.18.0/cmake-3.18.0-Linux-x86_64.tar.gz -O cmake.tar.gz
         tar xzf cmake.tar.gz
 
     - name: Build and test
       run: |
+        cd {{ GITHUB_WORKSPACE }}
         mkdir build
         cd build
         /tmp/$(ls /tmp | grep "cmake-")/bin/cmake -DGENERATE_DOCUMENTATION=OFF .. && /tmp/$(ls /tmp | grep "cmake-")/bin/cmake --build . --target authenticator
